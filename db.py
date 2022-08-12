@@ -8,6 +8,7 @@ class BaseStatement(object):
 
 class BaseModel(object):
 
+    # delegate functions
     def get_create_statement(self) -> BaseStatement: pass
     def get_insert_statement(self) -> BaseStatement: pass
     def get_select_statement(self) -> BaseStatement: pass
@@ -96,3 +97,8 @@ class CompletedMedsModel(BaseModel):
             self.liquid1 = datetime.now()
         if medication == 'liquid2':
             self.liquid2 = datetime.now()
+
+class ModelManager(object):
+    wifi = WiFiModel()
+    schedule = ScheduleModel()
+    completed_meds_model = CompletedMedsModel()
