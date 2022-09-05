@@ -271,4 +271,4 @@ if __name__ == '__main__':
     p3.setup()
     s4.setup()
 
-    print(lc.read_raw_value())
+    print("Raw Value:%s" % lc.read_raw_value())
