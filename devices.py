@@ -1,3 +1,4 @@
+import time
 
 # i2c load cell using adafruit adc
 # https://www.adafruit.com/product/4538
