@@ -1,4 +1,5 @@
 from transitions import Machine
+from threading import Timer
 
 class PillDispenser(object):
 
@@ -8,12 +9,16 @@ class PillDispenser(object):
         'waiting_cup_present','waiting_cup_clear',
     ]
 
+
     def __init__(self, serial_number):
 
         self.serial = serial_number
 
         # keeps track of the state of the cup
         self.cup_empty = True
+
+        # keeps track if there is a timer running or not
+        self.timing = False
 
         self.machine = Machine(model=self, states = PillDispenser.states, initial='asleep')
 
@@ -41,4 +46,14 @@ class PillDispenser(object):
         self.machine.add_transition(trigger='cup_clear', source='waiting_for_cup_clear', dest='checking_schedule')
         
     # end init
+
+    def start_timer(self, interval, callback_function):
+        if not self.timing:
+            timer = Timer(interval=interval, function=callback_function)
+            self.timing = True
+            timer.start()
+
+    def reset_timer(self):
+        self.timing = False
+
 # end PillDespenser Class

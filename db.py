@@ -48,6 +48,10 @@ class WiFiModel(BaseModel):
     def get_select_statement(self):
         return BaseStatement("SELECT TOP(1) FROM wifi ORDER BY timestamp DESC")
 
+    @property
+    def objects(self):
+        return self.__execute__("SELECT * FROM wifi")
+
 class ScheduleModel(BaseModel):
     
     def __init__(self):
@@ -65,6 +69,10 @@ class ScheduleModel(BaseModel):
 
     def get_select_statement(self):
         return BaseStatement("SELECT TOP(1) FROM schedule ORDER BY timestamp DESC")
+
+    @property
+    def objects(self):
+        return self.__execute__("SELECT * FROM schedule")
 
 class CompletedMedsModel(BaseModel):
     def __init__(self):
@@ -97,6 +105,10 @@ class CompletedMedsModel(BaseModel):
             self.liquid1 = datetime.now()
         if medication == 'liquid2':
             self.liquid2 = datetime.now()
+
+    @property
+    def objects(self):
+        return self.__execute__("SELECT * FROM completed_meds")
 
 class ModelManager(object):
     wifi = WiFiModel()
