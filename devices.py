@@ -36,6 +36,7 @@ class LoadCell(BaseDevice):
         elif channel == 2:
             self.device.channel = 2
         else:
+            print("Channel requested: %s" % channel)
             raise ValueError("Invalid channel number.")
 
         while count <= samples:
@@ -48,8 +49,8 @@ class LoadCell(BaseDevice):
 
     def zero_scale(self):
 
-        #self.device.channel = 1
-        #self.read_raw_value(100)
+        self.device.channel = 1
+        self.read_raw_value(100)
         self.device.channel = 2
         self.read_raw_value(100)
 
