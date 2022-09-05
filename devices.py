@@ -260,10 +260,10 @@ if __name__ == '__main__':
     lc = LoadCell()
 
     p1 = Pump(b1, 1)
-    s2 = PillWheel(b1, 1, 200)
+    s2 = PillWheel(b1, 2, 200)
 
     p3 = Pump(b2, 1)
-    s4 = PillWheel(b2, 1, 200)
+    s4 = PillWheel(b2, 2, 200)
 
     lc.setup()
     p1.setup()
