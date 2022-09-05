@@ -50,14 +50,14 @@ class LoadCell(BaseDevice):
     def zero_scale(self):
 
         self.device.channel = 1
-        self.read_raw_value(100)
+        self.read_raw_value(channel=1, samples=100)
         self.device.channel = 2
-        self.read_raw_value(100)
+        self.read_raw_value(channel=2, samples=100)
 
     def loop(self):
         
         # read and update the value
-        self.value = self.read_raw_value()
+        self.value = self.read_raw_value(samples=100)
 
 
 # pill motor and pump are controlled via an
