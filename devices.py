@@ -149,7 +149,6 @@ class PillWheel(object):
         return status
 
     def loop(self):
-        super(PillMotor, self).loop()
 
         if self.isMoving() and self.__step_count__ < self.__count_total__:
             self.device.onestep(direction=self.direction, style=stepper.MICROSTEP)
