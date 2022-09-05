@@ -198,7 +198,6 @@ class Pump(object):
         self.__total_deliver_time__ = 0
 
     def setup(self, fast_rate_sec_to_ml=20, dribbe_rate_sec_to_mL=300):
-        super(Pump, self).setup()
 
         # to start, make the throttle zero
         self.device.throttle = 0.0
