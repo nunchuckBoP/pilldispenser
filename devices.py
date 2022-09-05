@@ -69,16 +69,16 @@ class MotorControl(BaseDevice):
     
     def __init__(self, address=0x60):
         super(MotorControl, self).__init__(address)
-        kit = MotorKit(self.address, i2c=board.I2C())
+        self.kit = MotorKit(self.address, i2c=board.I2C())
 
 class PillWheel(object):
     def __init__(self, motor_control_class, motor_number=1, steps_per_rev=200):
-        
+
         self.control = motor_control_class
         if motor_number == 1:
-            self.device = self.control.stepper1
+            self.device = self.control.kit.stepper1
         elif motor_number == 2:
-            self.device = self.control.stepper2
+            self.device = self.control.kit.stepper2
         else:
             raise ValueError("Invalid motor number.")
 
@@ -172,13 +172,13 @@ class Pump(object):
         # determines the device bases off of the motor
         # number given
         if motor_number == 1:
-            self.device = self.control.motor1
+            self.device = self.control.kit.motor1
         elif motor_number == 2:
-            self.device = self.control.motor2
+            self.device = self.control.kit.motor2
         elif motor_number == 3:
-            self.device = self.control.motor3
+            self.device = self.control.kit.motor3
         elif motor_number == 4:
-            self.device = self.control.motor4
+            self.device = self.control.kit.motor4
         else:
             raise ValueError("Invalid motor number")
 
