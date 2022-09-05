@@ -59,6 +59,7 @@ class LoadCell(BaseDevice):
         
         # read and update the value
         self.value = self.read_raw_value(samples=100)
+        print("RAW READING: %s" % self.value)
 
 
 # pill motor and pump are controlled via an
@@ -266,13 +267,13 @@ if __name__ == '__main__':
     p3 = Pump(b2, 1)
     s4 = PillWheel(b2, 2, 200)
 
-    lc.setup()
-    p1.setup()
-    s2.setup()
-    p3.setup()
-    s4.setup()
+    devices = [lc,p1,s2,p3,s4]
+    for i in devices:
+        i.setup()
 
-    t1 = time.time()
-    r = lc.read_raw_value()
-    t2 = time.time()
-    print("Raw Value: %s\tTTR: %s" % (r, t2-t1))
+    while True:
+        for i in devices:
+            i.loop()
+        # end for
+
+        time.sleep(0.25)
