@@ -73,6 +73,7 @@ class MotorControl(BaseDevice):
 
 class PillWheel(object):
     def __init__(self, motor_control_class, motor_number=1, steps_per_rev=200):
+        
         self.control = motor_control_class
         if motor_number == 1:
             self.device = self.control.stepper1
@@ -163,7 +164,6 @@ class PillWheel(object):
 class Pump(object):
 
     def __init__(self, motor_control_class, motor_number=1, throttle=0.75, dribble=0.25):
-        super(Pump, self).__init__(address)
         
         # sets the control object to the given motor
         # control class
