@@ -67,7 +67,7 @@ class PillMotor(BaseDevice):
 
 class MotorControl(BaseDevice):
     
-    def __init__(self, address):
+    def __init__(self, address=0x60):
         super(MotorControl, self).__init__(address)
         kit = MotorKit(self.address, i2c=board.I2C())
 
@@ -252,3 +252,23 @@ class Pump(object):
 
         else:
             self.device.throttle = 0.0
+
+if __name__ == '__main__':
+
+    b1 = MotorControl(address=0x60)
+    b2 = MotorControl(address=0x61)
+    lc = LoadCell()
+
+    p1 = Pump(b1, 1)
+    s2 = PillWheel(b1, 1, 200)
+
+    p3 = Pump(b2, 1)
+    s4 = PillWheel(b2, 1, 200)
+
+    lc.setup()
+    p1.setup()
+    s2.setup()
+    p3.setup()
+    s4.setup()
+
+    print(lc.read_raw_value())
