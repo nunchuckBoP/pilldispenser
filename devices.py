@@ -48,10 +48,10 @@ class LoadCell(BaseDevice):
 
     def zero_scale(self):
 
-        self.device.channel = 1
-        self.read_raw_value(100)
-        #self.device.channel = 2
+        #self.device.channel = 1
         #self.read_raw_value(100)
+        self.device.channel = 2
+        self.read_raw_value(100)
 
     def loop(self):
         
