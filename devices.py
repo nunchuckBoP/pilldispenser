@@ -271,4 +271,7 @@ if __name__ == '__main__':
     p3.setup()
     s4.setup()
 
-    print("Raw Value:%s" % lc.read_raw_value())
+    t1 = time.time()
+    r = lc.read_raw_value()
+    t2 = time.time()
+    print("Raw Value: %s\tTTR: %s" % (r, t2-t1))
