@@ -1,6 +1,9 @@
 import sqlite3
 from datetime import datetime
 
+# base class uses this filename
+DB_FILENAME = 'db.sqlite3'
+
 class BaseStatement(object):
     def __init__(self, statement, parameters=()):
         self.statement = statement
@@ -26,7 +29,7 @@ class BaseModel(object):
         return self.__execute__(s.statement, s.parameters)
 
     def __execute__(self, statement, parameters):
-        con = sqlite3.connect('data.db')
+        con = sqlite3.connect(DB_FILENAME)
         c = con.cursor()
         results = c.execute(statement).fetchall()
         c.close()
@@ -111,6 +114,17 @@ class CompletedMedsModel(BaseModel):
         return self.__execute__("SELECT * FROM completed_meds")
 
 class ModelManager(object):
-    wifi = WiFiModel()
-    schedule = ScheduleModel()
-    completed_meds_model = CompletedMedsModel()
+
+    def __init__(self):
+
+        self.wifi = WiFiModel()
+        self.schedule = ScheduleModel()
+        self.completed_meds = CompletedMedsModel()
+
+        self.wifi.create()
+        self.schedule.create()
+        self.completed_meds.create()
+
+if __name__ == '__main__':
+
+    m = ModelManager()
