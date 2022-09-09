@@ -58,8 +58,14 @@ class LoadCell(BaseDevice):
     def loop(self):
         
         # read and update the value
-        self.value = self.read_raw_value(samples=100)
-        print("RAW READING: %s" % self.value)
+        self.value = self.read_raw_value(channel=1, samples=5)
+        
+        p = {
+            "channel 1" : self.value,
+            "channel 2" : self.read_raw_value(channel=2, samples=5)
+        }
+        
+        print(p)
 
 
 # pill motor and pump are controlled via an
