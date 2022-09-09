@@ -59,14 +59,7 @@ class LoadCell(BaseDevice):
         
         # read and update the value
         self.value = self.read_raw_value(channel=1, samples=1)
-        
-        p = {
-            "channel 1" : self.value,
-            "channel 2" : self.read_raw_value(channel=2, samples=1)
-        }
-        
-        print(p)
-
+        print("self.value= %s" % self.value)
 
 # pill motor and pump are controlled via an
 # adafruit motor control hat
