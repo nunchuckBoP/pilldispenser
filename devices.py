@@ -58,11 +58,11 @@ class LoadCell(BaseDevice):
     def loop(self):
         
         # read and update the value
-        self.value = self.read_raw_value(channel=1, samples=5)
+        self.value = self.read_raw_value(channel=1, samples=1)
         
         p = {
             "channel 1" : self.value,
-            "channel 2" : self.read_raw_value(channel=2, samples=5)
+            "channel 2" : self.read_raw_value(channel=2, samples=1)
         }
         
         print(p)
