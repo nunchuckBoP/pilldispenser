@@ -10,17 +10,19 @@ from adafruit_motorkit import MotorKit
 from adafruit_motor import stepper
 
 class BaseDevice(object):
-    def __init__(self, address):
+    def __init__(self, name, address):
         self.address = address
+        self.name = name
 
-    def setup(self):pass
+    def setup(self):
+        print("setting up: %s" % self.name)
     def loop(self):pass
 
 # Load cell for reading cup / pill weight
 class LoadCell(BaseDevice):
 
-    def __init__(self, address=0x2a):
-        super(LoadCell, self).__init__(address)
+    def __init__(self, name="Load Cell", address=0x2a):
+        super(LoadCell, self).__init__(name, address)
         self.device = NAU7802(board.I2C(), address=self.address, active_channels=2)
         self.value = 0.0
 
@@ -98,6 +100,7 @@ class PillWheel(object):
 
     def setup(self):
         # releases power to the stepper motor
+        print("setting up: Motor-%s" % self.__motor_number__)
         self.device.release()
         self.direction = stepper.FORWARD
 
@@ -255,17 +258,20 @@ class Pump(object):
 
 if __name__ == '__main__':
 
+    # motor control classes
     b1 = MotorControl(address=0x60)
     b2 = MotorControl(address=0x61)
-    lc = LoadCell()
 
+    # device classes
+    lc = LoadCell()
     p1 = Pump(b1, 1)
     s2 = PillWheel(b1, 2, 200)
-
     p3 = Pump(b2, 1)
     s4 = PillWheel(b2, 2, 200)
 
-    devices = [lc,p1,s2,p3,s4]
+    # device array
+    devices = [lc, p1, s2, p3, s4]
+
     for i in devices:
         i.setup()
 
@@ -273,5 +279,3 @@ if __name__ == '__main__':
         for i in devices:
             i.loop()
         # end for
-
-        #time.sleep(0.1)
