@@ -261,8 +261,8 @@ if __name__ == '__main__':
     # motor control classes
     b1 = MotorControl(name="Motor Control Board 1", address=0x60)
     b2 = MotorControl(name="Motor Control Board 2", address=0x61)
-    b1.setup()
-    b2.setup()
+
+    control_boards = [b1, b2]
 
     # device classes
     lc = LoadCell()
@@ -273,6 +273,9 @@ if __name__ == '__main__':
 
     # device array
     devices = [lc, p1, s2, p3, s4]
+
+    for i in control_boards:
+        i.setup()
 
     for i in devices:
         i.setup()
