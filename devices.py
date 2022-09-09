@@ -261,6 +261,8 @@ if __name__ == '__main__':
     # motor control classes
     b1 = MotorControl(name="Motor Control Board 1", address=0x60)
     b2 = MotorControl(name="Motor Control Board 2", address=0x61)
+    b1.setup()
+    b2.setup()
 
     # device classes
     lc = LoadCell()
