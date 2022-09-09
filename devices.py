@@ -71,8 +71,8 @@ class PillMotor(BaseDevice):
 
 class MotorControl(BaseDevice):
     
-    def __init__(self, address=0x60):
-        super(MotorControl, self).__init__(address)
+    def __init__(self, name="Motor Control Board", address=0x60):
+        super(MotorControl, self).__init__(name, address)
         self.kit = MotorKit(self.address, i2c=board.I2C())
 
 class PillWheel(object):
