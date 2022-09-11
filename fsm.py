@@ -9,24 +9,17 @@ class PillDispenser(object):
         'waiting_cup_present','waiting_cup_clear',
     ]
 
-    def prepare(self, event):
-        # prepares for state change
-        print("Preparing for state change.")
-    
-    def finalize(self, event):
-        # finalizes state change
-        print("Finalizing state change.")
-
     def __init__(self, serial_number):
 
-        self.machine = Machine(model=self, states=PillDispenser.states, \
-                                before_state_change=self.prepare, after_state_change=self.finalize, \
-                                initial='asleep')
+        self.timer_pre = 10.0
+        self.timeout_pre = 300.0
+
+        self.machine = Machine(model=self, states=PillDispenser.states, initial='asleep')
 
         # add some transitions.
-        self.machine.add_transition(trigger='wake_up', source='asleep', dest='splash_screen')
+        self.machine.add_transition(trigger='wake_up', source='asleep', dest='splash_screen', after=self.start_timer)
         self.machine.add_transition(trigger='timer_complete', source='splash_screen', dest='wifi_ssid')
-        self.machine.add_transition(trigger='wifi_ssid_complete', source='wifi_ssid', dest='wifi_security')
+        self.machine.add_transition(trigger='wifi_ssid_complete', source='wifi_ssid', dest='wifi_security', after=self.start_timeout)
         self.machine.add_transition(trigger='timeout_complete', source='wifi_security', dest='wifi_ssid')
 
         # instructions
@@ -46,4 +39,23 @@ class PillDispenser(object):
         self.machine.add_transition(trigger='cup_clear', source='waiting_for_cup_clear', dest='checking_schedule')
         
     # end init
+
+    def start_timer(self):
+        print("FSM: Starting timer...")
+        t = Timer(interval=10, function=self.timer_complete)
+        t.start()
+
+    def start_timeout(self):
+        print("FSM: Starting timeout timer...")
+        t = Timer(interval=60, function=self.timeout_complete)
+        t.start()
+
+    def set_timer(self, interval):
+        print("Setting timer to %s seconds." % interval)
+        self.timer_pre = interval
+
+    def set_timeout(self, interval):
+        print("Setting timeout timer to %s seconds." % interval)
+        self.timeout_pre = interval
+
 # end class
