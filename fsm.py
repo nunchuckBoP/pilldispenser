@@ -9,10 +9,19 @@ class PillDispenser(object):
         'waiting_cup_present','waiting_cup_clear',
     ]
 
+    def prepare(self, event):
+        # prepares for state change
+        print("Preparing for state change.")
+    
+    def finalize(self, event):
+        # finalizes state change
+        print("Finalizing state change.")
 
     def __init__(self, serial_number):
 
-        self.machine = Machine(model=self, states = PillDispenser.states, initial='asleep')
+        self.machine = Machine(model=self, states=PillDispenser.states, \
+                                before_state_change=self.prepare, after_state_change=self.finalize, \
+                                initial='asleep')
 
         # add some transitions.
         self.machine.add_transition(trigger='wake_up', source='asleep', dest='splash_screen')
