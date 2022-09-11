@@ -12,22 +12,13 @@ class PillDispenser(object):
 
     def __init__(self, serial_number):
 
-        self.serial = serial_number
-
-        # keeps track of the state of the cup
-        self.cup_empty = True
-
-        # keeps track if there is a timer running or not
-        self.timing = False
-
         self.machine = Machine(model=self, states = PillDispenser.states, initial='asleep')
 
         # add some transitions.
         self.machine.add_transition(trigger='wake_up', source='asleep', dest='splash_screen')
-        self.machine.add_transition(trigger='splash_complete', source='splash_screen', dest='wifi_ssid')
+        self.machine.add_transition(trigger='timer_complete', source='splash_screen', dest='wifi_ssid')
         self.machine.add_transition(trigger='wifi_ssid_complete', source='wifi_ssid', dest='wifi_security')
-        self.machine.add_transition(trigger='ssid_entered', source='wifi_security', dest='loading_liquid_instructions')
-        self.machine.add_transition(trigger='timeout', source='wifi_security', dest='wifi_ssid')
+        self.machine.add_transition(trigger='timeout_complete', source='wifi_security', dest='wifi_ssid')
 
         # instructions
         self.machine.add_transition(trigger='loading_liquid_complete', source='loading_liquid', dest='loading_pill_instructions')
@@ -46,14 +37,4 @@ class PillDispenser(object):
         self.machine.add_transition(trigger='cup_clear', source='waiting_for_cup_clear', dest='checking_schedule')
         
     # end init
-
-    def start_timer(self, interval, callback_function):
-        if not self.timing:
-            timer = Timer(interval=interval, function=callback_function)
-            self.timing = True
-            timer.start()
-
-    def reset_timer(self):
-        self.timing = False
-
-# end PillDespenser Class
+# end class

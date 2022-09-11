@@ -256,31 +256,31 @@ class Pump(object):
         else:
             self.device.throttle = 0.0
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    # motor control classes
-    b1 = MotorControl(name="Motor Control Board 1", address=0x60)
-    b2 = MotorControl(name="Motor Control Board 2", address=0x61)
+#     # motor control classes
+#     b1 = MotorControl(name="Motor Control Board 1", address=0x60)
+#     b2 = MotorControl(name="Motor Control Board 2", address=0x61)
 
-    control_boards = [b1, b2]
+#     control_boards = [b1, b2]
 
-    # device classes
-    lc = LoadCell()
-    p1 = Pump(b1, 1)
-    s2 = PillWheel(b1, 2, 200)
-    p3 = Pump(b2, 1)
-    s4 = PillWheel(b2, 2, 200)
+#     # device classes
+#     lc = LoadCell()
+#     p1 = Pump(b1, 1)
+#     s2 = PillWheel(b1, 2, 200)
+#     p3 = Pump(b2, 1)
+#     s4 = PillWheel(b2, 2, 200)
 
-    # device array
-    devices = [lc, p1, s2, p3, s4]
+#     # device array
+#     devices = [lc, p1, s2, p3, s4]
 
-    for i in control_boards:
-        i.setup()
+#     for i in control_boards:
+#         i.setup()
 
-    for i in devices:
-        i.setup()
+#     for i in devices:
+#         i.setup()
 
-    while True:
-        for i in devices:
-            i.loop()
-        # end for
+#     while True:
+#         for i in devices:
+#             i.loop()
+#         # end for
