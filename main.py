@@ -29,10 +29,19 @@ if __name__ == '__main__':
 
                         # set the timeout time for the next state,
                         # not the current one
-                        fsm.set_timeout(10.0)
+                        fsm.set_timeout(60.0)
 
                         # simulate the ssid complete
                         fsm.wifi_ssid_complete()
+
+                elif fsm.is_wifi_security():
+
+                        # simulate the wifi security being typed
+                        # in
+                        fsm.wifi_security_complete()
+
+                elif fsm.is_loading_liquid():
+                        pass
 
         # end while
         
