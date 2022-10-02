@@ -41,7 +41,9 @@ if __name__ == '__main__':
                         fsm.wifi_security_complete()
 
                 elif fsm.is_loading_liquid():
-                        pass
+                        
+                        # TODO: Code for this section
+                        fsm.loading_liquid_complete()
 
         # end while
         
