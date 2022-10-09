@@ -1,4 +1,5 @@
 import time
+import RPi.GPIO
 
 # i2c load cell using adafruit adc
 # https://www.adafruit.com/product/4538
@@ -17,6 +18,28 @@ class BaseDevice(object):
     def setup(self):
         print("setting up: %s" % self.name)
     def loop(self):pass
+
+class LimitSwitch(object):
+    def __init__(gpio_pin=22):
+        self.gpio_pin = gpio_pin
+        self.state = False
+
+    def setup(self):
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.gpio_pin, GPIO.IN) 
+
+    def loop(self):
+        if not self.state:
+            self.state = GPIO.input(self.gpio_pin)
+            if self.state:
+                self.on_input()
+
+    def on_input(self):
+        pass
+
+    def reset(self):
+        if self.state:
+            self.state = False
 
 # Load cell for reading cup / pill weight
 class LoadCell(BaseDevice):
@@ -62,12 +85,6 @@ class LoadCell(BaseDevice):
         # read and update the value
         self.value = self.read_raw_value(channel=1, samples=1)
         print("self.value= %s" % self.value)
-
-# pill motor and pump are controlled via an
-# adafruit motor control hat
-class PillMotor(BaseDevice):
-    pass
-
 
 class MotorControl(BaseDevice):
     
@@ -255,6 +272,8 @@ class Pump(object):
 
         else:
             self.device.throttle = 0.0
+
+
 
 # if __name__ == '__main__':
 
